@@ -29,5 +29,13 @@ namespace cognitive_services.Controllers
             //TODO: Responder em formato JSON
             return "Imagem não possui texto";
         }
+
+
+
+        [HttpGet("Image")]
+        public string GetImage(string pathImagem)
+        {
+           return _contentModerator.Image(pathImagem);
+        }
     }
 }

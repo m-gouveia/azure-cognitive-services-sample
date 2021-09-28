@@ -4,6 +4,6 @@
     {
         string Text(string text);
 
-        string Image();
+        string Image(string url);
     }
 }

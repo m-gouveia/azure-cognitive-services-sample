@@ -33,16 +33,17 @@ namespace cognitive_services.Services
             }
         }
 
-        public string Image()
+        public string Image(string pathImagem)
         {
+            if (string.IsNullOrEmpty(pathImagem))
+            {
+                pathImagem = "https://cdn.dol.com.br/img/Artigo-Destaque/670000/foto_00674297_0_.jpg?xid=1619969";
+            }
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _azureParams.Key);
 
             //URL da Imagem
-            var jsonContent = @"{
-                                  'DataRepresentation':'URL',
-                                  'Value':'https://istoe.com.br/wp-content/uploads/sites/14/2021/08/mulher-melao-1.jpg'
-                                }";
+            var jsonContent = "{'DataRepresentation':'URL','Value':'" + pathImagem + "'}";
 
             byte[] byteData = Encoding.UTF8.GetBytes(jsonContent);
 
