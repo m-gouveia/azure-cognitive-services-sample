@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿
+using Newtonsoft.Json;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -29,7 +31,23 @@ namespace cognitive_services.Services
                 content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
                 HttpResponseMessage response = client.PostAsync(_uriProcessText, content).Result;
 
-                return response.Content.ReadAsStringAsync().Result;
+
+                //Terms
+                var result = response.Content.ReadAsStringAsync().Result;
+                dynamic jsonretorno = JsonConvert.DeserializeObject(result);
+
+                string retorno = "";
+                if (jsonretorno.Terms != null && ((Newtonsoft.Json.Linq.JArray)jsonretorno.Terms).Count > 0)
+                {
+                    retorno = $"O texto informado na imagem possui {((Newtonsoft.Json.Linq.JArray)jsonretorno.Terms).Count} palavroes!! \n";
+
+                }
+                else
+                    retorno = "O texto informado na imagem nao possui palavroes! \n";
+
+                retorno += result;
+
+                return retorno;
             }
         }
 
